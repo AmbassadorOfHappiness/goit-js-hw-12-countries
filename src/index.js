@@ -43,20 +43,32 @@ function clearInput() {
 }
 
 function updateCountries(data) {
-    if (data.length === 1) {
-        markup.insertAdjacentHTML('beforeend', country(data));
-        return;
-        }
 
-    if (data.status === 404) {
-        error({
-        type: 'notice',
-        text: 'Ничего не нашли, попробуй еще',
-        delay: 2000,
-        width: '300px',
-        maxTextHeight: null,
+    if (data.length === 1) {
+      markup.insertAdjacentHTML('beforeend', country(data));
+      return;
+    }
+
+  if (data.status === 404) {
+    error({
+      type: 'notice',
+      text: 'Nothing found ☹',
+      delay: 2000,
+      width: '300px',
+      maxTextHeight: null,
     });
   }
+
+  if (data.length > 10) {
+    error({
+      type: 'error',
+      text: 'Too many matches found!',
+      delay: 2000,
+      maxTextHeight: null,
+    });
+    return;
+  }
+
 
   markup.insertAdjacentHTML('beforeend', countries(data));
 }
